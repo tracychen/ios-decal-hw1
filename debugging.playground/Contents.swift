@@ -15,41 +15,40 @@ class Foo {
     var wordB : String!
     
     init (words: [String?]) {
-        wordA = words[0]?
-        wordB = words[1]?
+        wordA = words[0]
+        wordB = words[1]
     }
     
 //: [EXPLAIN YOUR ANSWER TO Q1 HERE]
-    
-
+//: The question marks after word[0] and word[1] are not needed since the values of the array are already defined as being optional. Additionally, wordA and wordB are defined as being implicitly unwrapped.
     
 //: ## Q2: Variable Types and Function Types
 //: Why does the compiler dislike the for loop? Also, what should we return?
     
-    func arePalindromes(words: [String]) -> Bool! {
+   static func arePalindromes(words: [String]) -> Bool! {
         let reversedWords = words.map() {String($0.characters.reverse())}
-        var numElements = words.count
+        let numElements = words.count
         
-        for let i = 0; i < numElements; i++ {
+        for var i = 0; i < numElements; i++ {
             if words[i] != reversedWords[i] {
                 return false
             }
         }
         
-        return nil
+        return true
     }
     
 //: [EXPLAIN YOUR ANSWER TO Q2 HERE]
-    
+//:    Using "let" makes i a constant, which is immutable so you cannot do i++. We should return true if the input strings are all palindromes.
     
     
 //: ## Q3: More functions, and object initialization
 //: The method should be returning true or false -- what's wrong?
 //: Are we initializing the dictionary correctly?
-    func isAnagram(wordA: String, wordB: String) -> Bool? {
-        var countLetters : [Character : Int]
-        var lenA = wordA.characters.count
-        var lenB = wordB.characters.count
+   static func isAnagram(wordA: String, wordB: String) -> Bool {
+        var countLetters = [Character : Int]()
+        let lenA = wordA.characters.count
+        let lenB = wordB.characters.count
         
         if lenA != lenB {
             return false
@@ -75,19 +74,18 @@ class Foo {
             }
         }
         
-        for (letter, count) in countLetters {
+        for (_, count) in countLetters {
             if count != 0 {
                 return false
             }
         }
-        
-        return nil
+            
+        return true
     }
 }
 
 //: [EXPLAIN YOUR ANSWER TO Q3 HERE]
-
-
+//: Need to initialize the dictionary by changing":" to "=" and adding "()". Also, it cannot return nil, has to return true. 
 //: **Do not** change anything below.
 //: You should be able to call the methods as is.
 Foo.isAnagram("anagram", wordB: "managra")
